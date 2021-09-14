@@ -2,9 +2,9 @@ import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../database/database";
 import { ItemInterface } from "../interfaces/interfaces";
 
-interface ItemCreationAttributes extends Optional<ItemInterface, "idItem">{};
+interface ItemCreationAttributes extends Optional<ItemInterface, "idItem"> { };
 
-export default class Item extends Model<ItemInterface,ItemCreationAttributes> implements ItemInterface{
+export default class Item extends Model<ItemInterface, ItemCreationAttributes> implements ItemInterface {
     public idItem!: number;
     public text!: string;
     public itemCompleted!: boolean;

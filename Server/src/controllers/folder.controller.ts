@@ -1,21 +1,21 @@
 import { Request, Response } from 'express';
-import Item from "../models/Item";
+import Folder from "../models/Folder";
+import Item from '../models/Item';
 
-export default class ParametrosController {
+export default class FolderController {
     constructor() { }
     //Create an Parametros
     new = async (req: Request, res: Response) => {
-        const { text,idFolder } = req.body;
+        const { name } = req.body;
         try {
-            const newItem = await Item.create({
-                text,
-                itemCompleted: false,
-                idFolder: idFolder
+            const newFolder = await Folder.create({
+                name,
+                folderCompleted: false
             });
-            if (newItem) {
+            if (newFolder) {
                 return res.json({
-                    message: 'The Item has been created',
-                    data: newItem
+                    message: 'The Folder has been created',
+                    data: newFolder
                 });
             };
         } catch (error) {
@@ -28,9 +28,9 @@ export default class ParametrosController {
 
     getAll = async (req: Request, res: Response) => {
         try {
-            const items = await Item.findAll();
+            const folders = await Folder.findAll();
             return res.json({
-                data: items
+                data: folders
             });
         } catch (error) {
             console.log(error);
@@ -41,14 +41,14 @@ export default class ParametrosController {
     };
 
     getOne = async (req: Request, res: Response) => {
-        const { idItem } = req.params;
+        const { idFolder } = req.params;
         try {
-            const item = await Item.findOne({
-                where: { idItem }
+            const folder = await Folder.findOne({
+                where: { idFolder }
             });
-            if(item){
+            if(folder){
                 return res.json({
-                    data: item
+                    data: folder
                 });
             };
             
@@ -61,25 +61,25 @@ export default class ParametrosController {
     };
 
     change = async (req: Request, res: Response) => {
-        const { idItem } = req.params;
-        const { text, itemCompleted } = req.body;
+        const { idFolder } = req.params;
+        const { name, folderCompleted } = req.body;
         try {
-            await Item.update({
-                text,
-                itemCompleted
+            await Folder.update({
+                name,
+                folderCompleted
             }, {
                 where: {
-                    idItem
+                    idFolder
                 },
             });
-            const item = await Item.findOne({
+            const folder = await Folder.findOne({
                 where: {
-                    idItem
+                    idFolder
                 }
             });
             return res.json({
-                message: 'The item has been changed',
-                data: item
+                message: 'The Folder has been changed',
+                data: folder
             });
         } catch (error) {
             console.log(error);
@@ -91,15 +91,21 @@ export default class ParametrosController {
 
     delete = async (req: Request, res: Response) => {
         try {
-            const { idItem } = req.params;
-            const deleteRowCount = await Item.destroy({
+            const { idFolder } = req.params;
+            const itemDeleteRowCount = await Item.destroy({
                 where: {
-                    idItem
+                    idFolder:idFolder
+                }
+            })
+            const folderDeleteRowCount = await Folder.destroy({
+                where: {
+                    idFolder
                 }
             });
             return res.json({
-                message: 'The Item has been deleted',
-                count: deleteRowCount
+                message: 'The Folder has been deleted',
+                itemCount: itemDeleteRowCount,
+                folderCount: folderDeleteRowCount
             });
 
         } catch (error) {

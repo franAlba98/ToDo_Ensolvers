@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
 import itemRoutes from './routes/item'
+import folderRoutes from './routes/folder'
 
 const server = Server.instance;
 
@@ -18,6 +19,7 @@ server.app.use( bodyParser.json() );
 
 /* routes */
 server.app.use('/api/item', itemRoutes);
+server.app.use('/api/folder', folderRoutes);
 
 
 server.start(()=>{
