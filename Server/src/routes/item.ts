@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import ItemController from '../controllers/item.controller';
+import { verifyToken } from '../middleware/validation';
 
 const router = Router();
 const controller = new ItemController();

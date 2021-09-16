@@ -1,0 +1,51 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid gap-3">
+        <a class="navbar-brand" href="#">Menu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+            <div *ngIf="show">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="userName" placeholder="User Name" aria-label="userName">
+                    <input class="form-control me-2" type="password" placeholder="Password" aria-label="password">
+                    <button class="btn btn-outline-success" type="submit" (click)="toggle()">Login</button>
+                </form>
+            </div>
+
+            <button class="btn btn btn-outline-warning" type="submit" (click)="folders()">Carpetas</button>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group" *ngIf="showFolders">
+                <div class="container-fluid gap-3" *ngFor="let item of listFolder">
+
+                    <input class="list-group-item" type="checkbox" [checked]="item.checked" value=""
+                        id="flexCheckDefault">
+                    <li class="list-group-item">{{item.name}}</li>
+                    <button type="button" class="btn btn-success" (click)="items(item.idFolder)">View Items</button>
+                </div>
+
+            </ul>
+        </div>
+        <div class="col" *ngIf="showItems">
+            <ul class="list-group" >
+                <div class="container-fluid gap-3" *ngFor="let item of listItems">
+
+                    <input class="list-group-item" type="checkbox" [checked]="item.checked" value=""
+                        id="flexCheckDefault">
+                    <li class="list-group-item">{{item.text}}</li>
+                    <button type="button" class="btn btn-warning"  (click)="editItem(item.idItem)">Edit</button>
+                </div>
+
+            </ul>
+            <button type="button" class="btn btn-primary" (click)="newItem()">+</button>
+        </div>
+    </div>
+</div>

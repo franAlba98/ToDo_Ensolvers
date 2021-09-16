@@ -1,0 +1,9 @@
+<ul class="list-group" >
+    <div class="container-fluid gap-3" *ngFor="let item of lista">
+        
+        <input class="list-group-item" type="checkbox" [checked]="item.checked" value="" id="flexCheckDefault">
+        <li class="list-group-item">{{item.text}}</li>
+        <button type="button" class="btn btn-warning">Edit</button>
+    </div>
+    
+</ul>

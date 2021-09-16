@@ -1,0 +1,15 @@
+<form [formGroup]="formItem" (ngSubmit)="changeValues()">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-primary-title">Item</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body centered">
+        <textarea class="form-control" formControlName="text" id="exampleFormControlTextarea1" rows="3">{{formItem.value.text}}</textarea>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="changeValues()">Save changes</button>
+    </div>
+</form>

@@ -25,6 +25,10 @@ Folder.init({
     folderCompleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false
+    },
+    idUser:{
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     sequelize,
@@ -32,6 +36,7 @@ Folder.init({
     timestamps: false,
     freezeTableName: true,
 });
+
 //Cardinality with Item
 Folder.hasMany(Item,{foreignKey: 'idFolder', sourceKey: 'idFolder'});
 Item.belongsTo(Folder,{foreignKey: 'idFolder'});
