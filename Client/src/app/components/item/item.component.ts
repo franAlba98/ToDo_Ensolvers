@@ -13,6 +13,7 @@ export class ItemComponent implements OnInit {
   idItem: number = -1;
   idFolder: number = 0;
   newItemFlag: boolean = false;
+  message: string = "Hola Mundo!";
 
   constructor(private itemService: ItemService,public activeModal: NgbActiveModal) {
     this.formItem = new FormGroup({
@@ -38,12 +39,15 @@ export class ItemComponent implements OnInit {
   }
 
   changeValues() {
+    console.log('CHANGE VALUES');
     if(this.newItemFlag){
+      console.log('CHANGE VALUES NEW');
       this.formItem.value.idFolder=this.idFolder;
       this.itemService.newItem(this.formItem.value).subscribe((data: any) => {
         console.log(data);
       });
     }else{
+      console.log('CHANGE VALUES EDIT');
       this.itemService.editItem(this.idItem,this.formItem.value).subscribe((data: any) => {
         console.log(data);
       });

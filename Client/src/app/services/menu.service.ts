@@ -29,5 +29,18 @@ export class MenuService {
     return this.httpClient.delete(this.itemURL+`/${key$}`,{headers});
   }
 
+  deleteFolder(key$:number){
+    console.log('DEl KEY: ', key$);
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type','application/json');
+    return this.httpClient.delete(this.folderURL+`/${key$}`,{headers});
+  }
+
+  newFolder(body:any){
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type','application/json');
+    return this.httpClient.post(this.folderURL,body,{headers});
+  }
+
   
 }

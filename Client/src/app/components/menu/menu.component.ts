@@ -13,10 +13,12 @@ import { ItemComponent } from '../item/item.component';
 })
 export class MenuComponent implements OnInit {
 
+  formFolder: FormGroup;
   show: boolean = true;
   showFolders: boolean = false;
   showItems: boolean = false;
   showSingleItem: boolean = false;
+  currentUser: number = 1;
   currentFolder: number = 0;
   currentItem: number = 0;
   listFolder: any[] = [];
@@ -31,7 +33,12 @@ export class MenuComponent implements OnInit {
 
 
   constructor(private menuService: MenuService,private itemService: ItemService, private modalService: NgbModal) {
-
+    this.formFolder = new FormGroup({
+      'idFolder': new FormControl(),
+      'name': new FormControl(''),
+      'folderCompleted': new FormControl(false),
+      'idUser': new FormControl()
+    });
   }
 
   ngOnInit(): void {
@@ -84,6 +91,23 @@ export class MenuComponent implements OnInit {
     this.menuService.deleteItem(item).subscribe((data: any) => {
       console.log('DATA DELETE', data['data']);
     });
+    this.items(this.currentFolder);
+  }
+
+  newFolder() {
+    this.formFolder.value.idUser=this.currentUser;
+    this.menuService.newFolder(this.formFolder.value).subscribe((data: any) => {
+      console.log('DATA NEW FOLDER', data['data']);
+      this.folders();
+    });
+    
+  }
+
+  deleteFolder(folder: number) {
+    this.menuService.deleteFolder(folder).subscribe((data: any) => {
+      this.folders();
+    });
+    
   }
 
   openModal() {
