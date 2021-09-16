@@ -5,12 +5,12 @@ import { verifyToken } from '../middleware/validation';
 const router = Router();
 const controller = new FolderController();
 
-router.post('/',controller.new);
-router.put('/:idFolder',controller.change);
-router.get('/:idFolder',controller.getOne);
-router.get('/',controller.getAll);
-router.delete('/:idFolder',controller.delete);
-router.get('/:idFolder/item',controller.getItems);
-router.get('/:idFolder/item/:idItem',controller.getOneItem);
+router.post('/',verifyToken,controller.new);
+router.put('/:idFolder',verifyToken,controller.change);
+router.get('/:idFolder',verifyToken,controller.getOne);
+router.get('/',verifyToken,controller.getAll);
+router.delete('/:idFolder',verifyToken,controller.delete);
+router.get('/:idFolder/item',verifyToken,controller.getItems);
+router.get('/:idFolder/item/:idItem',verifyToken,controller.getOneItem);
 
 export default router;

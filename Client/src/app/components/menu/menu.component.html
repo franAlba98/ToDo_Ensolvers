@@ -1,60 +1,118 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid gap-3">
-        <a class="navbar-brand" href="#">Menu</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="container-fluid">
 
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">Menu</a>
             <div *ngIf="show">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="userName" placeholder="User Name" aria-label="userName">
-                    <input class="form-control me-2" type="password" placeholder="Password" aria-label="password">
-                    <button class="btn btn-outline-success" type="submit" (click)="toggle()">Login</button>
+                <form [formGroup]="formUser">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                                <input class="form-control" formControlName="userName" type="userName" placeholder="User Name"
+                                    aria-label="userName">
+                                <input class="form-control" formControlName="password" type="password" placeholder="Password"
+                                    aria-label="password">
+                        </li>
+                        <li class="nav-item">
+                            <form class="d-flex">
+                                <button class="btn btn-outline-success" type="button" (click)="login(formUser)">Login</button>
+
+                            </form>
+                        </li>
+                    </ul>
                 </form>
             </div>
+            <div *ngIf="!show">
+                <form class="form-inline my-2 my-lg-0">
+                    <button class="btn btn btn-outline-warning" type="button" (click)="folders()">Folders</button>
+                    <button class="btn btn btn-outline-danger" type="button" (click)="logout()">Logout</button>
+                </form>
+            </div>
+            
 
-            <button class="btn btn btn-outline-warning" type="submit" (click)="folders()">Carpetas</button>
+
         </div>
     </div>
 </nav>
 <div class="container">
-    <div class="row">
-        <div class="col" *ngIf="showFolders">
+    <div class="row g-3 align-items-center">
+        <div class="col-auto" *ngIf="showFolders">
             <form [formGroup]="formFolder" (ngSubmit)="newFolder()">
                 <ul class="list-group">
-                    <div class="container-fluid gap-3" *ngFor="let item of listFolder">
-                        <li class="list-group-item">{{item.name}}</li>
-                        <button type="button" class="btn btn-success" (click)="items(item.idFolder)">View Items</button>
-                        <button type="button" class="btn btn-danger"
-                            (click)="deleteFolder(item.idFolder)">Delete</button>
+                    <div class="container-fluid" *ngFor="let item of listFolder">
+                        <li class="list-group-item">
+                            <p>
+                                {{item.name}}
+                            </p>
+                            <div class="d-grid gap-2 mx-auto">
+                                <button type="button" class="btn btn-success" (click)="items(item.idFolder)">View
+                                    Items</button>
+                                <button type="button" class="btn btn-danger"
+                                    (click)="deleteFolder(item.idFolder)">Delete</button>
+                            </div>
+
+                        </li>
+
                     </div>
+                    <li>
+                        <input type="text" id="inputText" class="form-control" formControlName="name"
+                            placeholder="Write name for the new folder...">
+                        <button type="submit" class="btn btn-primary">Add new folder</button>
+                    </li>
+
 
                 </ul>
-                <input type="text" id="inputText" class="form-control" formControlName="name"
-                    aria-describedby="passwordHelpBlock">
-                <button type="submit" class="btn btn-primary">+</button>
+
             </form>
 
         </div>
-        <div class="col" *ngIf="showItems">
+        <div class="col-auto" *ngIf="showItems">
             <form [formGroup]="formFolder" (ngSubmit)="newItem()">
                 <ul class="list-group">
-                    <div class="container-fluid gap-3" *ngFor="let item of listItems">
-                        <input class="list-group-item" *ngIf="item.itemCompleted" type="checkbox" id="flexCheckDefault" (click)="toggleCheckItem(item.idItem)" checked>
-                        <input class="list-group-item" *ngIf="!item.itemCompleted" type="checkbox" id="flexCheckDefault" (click)="toggleCheckItem(item.idItem)">
-                        <li class="list-group-item">{{item.itemName}}</li>
-                        <button type="button" class="btn btn-success" (click)="editItem(item.idItem)">Edit / View</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteItem(item.idItem)">Delete</button>
+                    <div class="container-fluid" *ngFor="let item of listItems">
+                        <li class="list-group-item">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <p>
+                                        {{item.itemName}}
+                                    </p>
+                                </div>
+
+                                <div class="col-auto">
+                                    <input class="list-group-item" *ngIf="item.itemCompleted" type="checkbox"
+                                        id="flexCheckDefault" (click)="toggleCheckItem(item.idItem)" checked>
+                                    <input class="list-group-item" *ngIf="!item.itemCompleted" type="checkbox"
+                                        id="flexCheckDefault" (click)="toggleCheckItem(item.idItem)">
+                                </div>
+
+                            </div>
+                            <div class="d-grid gap-2 mx-auto">
+                                <button type="button" class="btn btn-success" (click)="editItem(item.idItem)">Edit /
+                                    View</button>
+                                <button type="button" class="btn btn-danger"
+                                    (click)="deleteItem(item.idItem)">Delete</button>
+
+                            </div>
+
+
+                        </li>
+
+
+
                     </div>
-    
+                    <li>
+                        <input type="text" id="inputText" class="form-control" formControlName="itemName"
+                            aria-describedby="passwordHelpBlock" placeholder="Write name for the new item...">
+                        <button type="submit" class="btn btn-primary">Add new item</button>
+                    </li>
+
                 </ul>
-                <input type="text" id="inputText" class="form-control" formControlName="itemName"
-                    aria-describedby="passwordHelpBlock">
-                <button type="submit" class="btn btn-primary">+</button>
+
             </form>
-            
+
         </div>
     </div>
 </div>

@@ -5,10 +5,10 @@ import { verifyToken } from '../middleware/validation';
 const router = Router();
 const controller = new ItemController();
 
-router.post('/',controller.new);
-router.put('/:idItem',controller.change);
-router.get('/:idItem',controller.getOne);
-router.get('/',controller.getAll);
-router.delete('/:idItem',controller.delete);
+router.post('/',verifyToken,controller.new);
+router.put('/:idItem',verifyToken,controller.change);
+router.get('/:idItem',verifyToken,controller.getOne);
+router.get('/',verifyToken,controller.getAll);
+router.delete('/:idItem',verifyToken,controller.delete);
 
 export default router;

@@ -125,4 +125,22 @@ export default class UserController {
             });
         }
     }
+
+    getOne = async (req: Request, res: Response) => {
+        const { idUser } = req.params;
+        try{
+            const user = await User.findOne({
+                where: { idUser }
+            });
+            if(user){
+                return res.json({
+                    data: user
+                });
+            };
+        } catch{
+            return res.json({
+                error: 'The server has an error'
+            });
+        }
+    }
 }

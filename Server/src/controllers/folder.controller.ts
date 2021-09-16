@@ -93,11 +93,6 @@ export default class FolderController {
     delete = async (req: Request, res: Response) => {
         try {
             const { idFolder } = req.params;
-            const itemDeleteRowCount = await Item.destroy({
-                where: {
-                    idFolder:idFolder
-                }
-            })
             const folderDeleteRowCount = await Folder.destroy({
                 where: {
                     idFolder
@@ -105,7 +100,6 @@ export default class FolderController {
             });
             return res.json({
                 message: 'The Folder has been deleted',
-                itemCount: itemDeleteRowCount,
                 folderCount: folderDeleteRowCount
             });
 

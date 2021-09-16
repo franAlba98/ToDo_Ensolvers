@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemService } from 'src/app/services/item.service';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-item',
@@ -14,9 +16,9 @@ export class ItemComponent implements OnInit {
   idFolder: number = 0;
   itemName: string = '';
   newItemFlag: boolean = false;
-  message: string = "Hola Mundo!";
+  @Output() newItemEvent = new EventEmitter<number>();
 
-  constructor(private itemService: ItemService,public activeModal: NgbActiveModal) {
+  constructor(private menuService: MenuService,private itemService: ItemService,public activeModal: NgbActiveModal) {
     this.formItem = new FormGroup({
       'idItem': new FormControl(),
       'text': new FormControl(''),
@@ -38,22 +40,22 @@ export class ItemComponent implements OnInit {
         console.log('ngInit EDIT ITEM: ',this.formItem);
       });
     }
-    
   }
 
+  passBack() {this.activeModal.close(this.formItem.value.idFolder);}
+
   changeValues() {
-    console.log('CHANGE VALUES');
     if(this.newItemFlag){
-      console.log('CHANGE VALUES NEW');
       this.formItem.value.idFolder=this.idFolder;
       this.formItem.value.itemName=this.itemName;
       this.itemService.newItem(this.formItem.value).subscribe((data: any) => {
-        console.log(data);
+        this.newItemFlag=false;
+        this.passBack();
       });
     }else{
-      console.log('CHANGE VALUES EDIT');
       this.itemService.editItem(this.idItem,this.formItem.value).subscribe((data: any) => {
         console.log(data);
+        this.passBack();
       });
     }
     
