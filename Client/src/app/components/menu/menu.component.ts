@@ -80,6 +80,12 @@ export class MenuComponent implements OnInit {
     this.openModal();
   }
 
+  deleteItem(item: number) {
+    this.menuService.deleteItem(item).subscribe((data: any) => {
+      console.log('DATA DELETE', data['data']);
+    });
+  }
+
   openModal() {
     const activeModal = this.modalService.open(ItemComponent);
     console.log('activeModal.componentInstance.idItem',activeModal.componentInstance.idItem);
