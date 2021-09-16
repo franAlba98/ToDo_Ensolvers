@@ -6,11 +6,12 @@ export default class FolderController {
     constructor() { }
     //Create an Parametros
     new = async (req: Request, res: Response) => {
-        const { name } = req.body;
+        const { name, idUser } = req.body;
         try {
             const newFolder = await Folder.create({
                 name,
-                folderCompleted: false
+                folderCompleted: false,
+                idUser: idUser
             });
             if (newFolder) {
                 return res.json({
@@ -108,6 +109,58 @@ export default class FolderController {
                 folderCount: folderDeleteRowCount
             });
 
+        } catch (error) {
+            console.log(error);
+            return res.json({
+                error: 'The server has an error'
+            });
+        }
+    };
+
+
+    getItems = async (req: Request, res: Response) => {
+        try {
+            const { idFolder } = req.params;
+            const folder = await Folder.findOne({
+                where: {
+                    idFolder
+                }
+            });
+            if(folder){
+                const items = await Item.findAll({
+                    where:{
+                        idFolder:folder.idFolder
+                    }
+                });
+                return res.json({
+                    data: items
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            return res.json({
+                error: 'The server has an error'
+            });
+        }
+    };
+    getOneItem = async (req: Request, res: Response) => {
+        try {
+            const { idFolder , idItem } = req.params;
+            const folder = await Folder.findOne({
+                where: {
+                    idFolder
+                }
+            });
+            if(folder){
+                const items = await Item.findOne({
+                    where:{
+                        idItem
+                    }
+                });
+                return res.json({
+                    data: items
+                });
+            }
         } catch (error) {
             console.log(error);
             return res.json({

@@ -8,5 +8,18 @@ export interface ItemInterface{
 export interface FolderInterface{
     idFolder?: number,
     name?: string,
-    folderCompleted?: boolean
+    folderCompleted?: boolean,
+    idUser?: number
+}
+
+export interface UserInterface{
+    idUser?: number,
+    userName?: string,
+    hash?: string,
+    salt?: string
+}
+
+export interface EncryptionInterface{
+    hash:string,
+    salt:string,
 }
