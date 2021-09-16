@@ -1,6 +1,6 @@
 <form [formGroup]="formItem" (ngSubmit)="changeValues()">
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-primary-title">Item</h4>
+        <h4 class="modal-title" id="modal-primary-title">{{formItem.value.itemName}}</h4>
     </div>
     <div class="modal-body centered">
         <textarea class="form-control" formControlName="text" id="exampleFormControlTextarea1" rows="3">{{formItem.value.text}}</textarea>

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { folderI } from '../interfaces/folder';
 import { urlServices } from '../interfaces/interfaces';
 
 @Injectable({
@@ -36,10 +37,36 @@ export class MenuService {
     return this.httpClient.delete(this.folderURL+`/${key$}`,{headers});
   }
 
-  newFolder(body:any){
+  newFolder(folder:any){
+    const body: folderI = {
+      name:folder.name,
+      idUser: folder.idUser
+    }
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type','application/json');
     return this.httpClient.post(this.folderURL,body,{headers});
+  }
+
+  getFolder(key$:number){
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type','application/json');
+    return this.httpClient.get(this.folderURL+`/${key$}`,{headers});
+  }
+
+  editItemCheck(key$:number,newItem:any){
+    let headers = new HttpHeaders();
+    const body = newItem;
+    console.log('body edit item',body);
+    headers = headers.set('Content-Type','application/json');
+    return this.httpClient.put(this.itemURL+`/${key$}`,body,{headers});
+  }
+
+  editFolder(key$:number,newFolder:any){
+    let headers = new HttpHeaders();
+    const body = newFolder;
+    console.log('body edit folder',body);
+    headers = headers.set('Content-Type','application/json');
+    return this.httpClient.put(this.folderURL+`/${key$}`,body,{headers});
   }
 
   

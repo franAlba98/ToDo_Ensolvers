@@ -12,6 +12,7 @@ export class ItemComponent implements OnInit {
   formItem: FormGroup;
   idItem: number = -1;
   idFolder: number = 0;
+  itemName: string = '';
   newItemFlag: boolean = false;
   message: string = "Hola Mundo!";
 
@@ -20,6 +21,7 @@ export class ItemComponent implements OnInit {
       'idItem': new FormControl(),
       'text': new FormControl(''),
       'itemCompleted': new FormControl(false),
+      'itemName': new FormControl(''),
       'idFolder': new FormControl()
     });
   }
@@ -27,6 +29,7 @@ export class ItemComponent implements OnInit {
   ngOnInit(): void {
     if(this.idItem==0){
       this.formItem.value.idFolder=this.idFolder;
+      this.formItem.value.itemName=this.itemName;
       this.newItemFlag=true;
       console.log('ngInit NEW ITEM: ',this.formItem.value);
     }else{
@@ -43,6 +46,7 @@ export class ItemComponent implements OnInit {
     if(this.newItemFlag){
       console.log('CHANGE VALUES NEW');
       this.formItem.value.idFolder=this.idFolder;
+      this.formItem.value.itemName=this.itemName;
       this.itemService.newItem(this.formItem.value).subscribe((data: any) => {
         console.log(data);
       });

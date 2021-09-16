@@ -8,6 +8,7 @@ export default class Item extends Model<ItemInterface, ItemCreationAttributes> i
     public idItem!: number;
     public text!: string;
     public itemCompleted!: boolean;
+    public itemName!: string;
     public idFolder!: number;
 };
 
@@ -24,6 +25,10 @@ Item.init({
     },
     itemCompleted: {
         type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    itemName: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     idFolder: {

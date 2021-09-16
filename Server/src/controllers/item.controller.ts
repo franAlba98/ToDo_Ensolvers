@@ -5,11 +5,12 @@ export default class ParametrosController {
     constructor() { }
     //Create an Parametros
     new = async (req: Request, res: Response) => {
-        const { text,idFolder } = req.body;
+        const { text, itemName, idFolder } = req.body;
         try {
             const newItem = await Item.create({
                 text,
                 itemCompleted: false,
+                itemName: itemName,
                 idFolder: idFolder
             });
             if (newItem) {
@@ -46,12 +47,12 @@ export default class ParametrosController {
             const item = await Item.findOne({
                 where: { idItem }
             });
-            if(item){
+            if (item) {
                 return res.json({
                     data: item
                 });
             };
-            
+
         } catch (error) {
             console.log(error);
             return res.json({

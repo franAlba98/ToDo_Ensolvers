@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { folderI } from 'src/app/interfaces/folder';
 import { itemI } from 'src/app/interfaces/item';
 import { ItemService } from 'src/app/services/item.service';
 import { MenuService } from 'src/app/services/menu.service';
@@ -27,7 +28,14 @@ export class MenuComponent implements OnInit {
     idItem:0,
     text:'',
     itemCompleted:false,
+    itemName:'',
     idFolder:0
+  };
+  currentFolderObject: folderI ={
+    idFolder:0,
+    name:'',
+    folderCompleted:false,
+    idUser:0
   };
   showPop: boolean = false;
 
@@ -37,7 +45,8 @@ export class MenuComponent implements OnInit {
       'idFolder': new FormControl(),
       'name': new FormControl(''),
       'folderCompleted': new FormControl(false),
-      'idUser': new FormControl()
+      'idUser': new FormControl(),
+      'itemName': new FormControl()
     });
   }
 
@@ -49,6 +58,14 @@ export class MenuComponent implements OnInit {
 
   toggle() {
     this.show = !this.show;
+  }
+
+  toggleCheckFolder(idFolder:number) {
+    this.editFolder(idFolder);
+  }
+
+  toggleCheckItem(idItem:number) {
+    this.editItemCheck(idItem);
   }
 
   folders() {
@@ -81,9 +98,31 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  editItemCheck(item: number) {
+    this.itemService.getItem(item).subscribe((data: any) => {
+      this.currentItemObject = data['data'];
+      this.currentItemObject.itemCompleted = !this.currentItemObject.itemCompleted;
+      this.menuService.editItemCheck(item,this.currentItemObject).subscribe((data: any) => {
+        this.currentItemObject = data['data'];
+      });
+    });
+  }
+
+  editFolder(folder: number) {
+    console.log('ID CURRENT FOLDER ', folder);
+    this.menuService.getFolder(folder).subscribe((data: any) => {
+      this.currentFolderObject = data['data'];
+      this.currentFolderObject.folderCompleted = !this.currentFolderObject.folderCompleted;
+      this.menuService.editFolder(folder,this.currentFolderObject).subscribe((data: any) => {
+        this.currentFolderObject = data['data'];
+      });
+    });
+  }
+
   newItem() {
     this.currentItemObject.idFolder=this.currentFolder;
     this.currentItemObject.idItem=0;
+    this.currentItemObject.itemName=this.formFolder.value.itemName;
     this.openModal();
   }
 
@@ -112,8 +151,9 @@ export class MenuComponent implements OnInit {
 
   openModal() {
     const activeModal = this.modalService.open(ItemComponent);
-    console.log('activeModal.componentInstance.idItem',activeModal.componentInstance.idItem);
+    console.log('activeModal currentItemObject',this.currentItemObject);
     activeModal.componentInstance.idItem = this.currentItemObject.idItem;
+    activeModal.componentInstance.itemName = this.currentItemObject.itemName;
     activeModal.componentInstance.idFolder = this.currentItemObject.idFolder;
   }
 
