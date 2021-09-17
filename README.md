@@ -39,6 +39,11 @@ _If the program does not start because the folder /dist is missing then Typescri
 ```
 tsc
 ```
+_This app uses a login system made with [JWT](https://jwt.io/). To log in the system you must use the following credentials:_
+```
+username: francisco
+password: 12345
+```
 ## Built with 🛠️
 
 * [nodeJS](https://nodejs.org/es/docs/) - JS run enviroment.

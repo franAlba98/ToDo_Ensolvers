@@ -20,7 +20,7 @@ investigacion
 _Is the password to access the server_
 
 ## Restoring
-_To create tables in the DB without any information, go to [Database.sql](https://github.com/rizosAlba/ToDo_Ensolvers/tree/main/Server/Database/database.sql)_
+_To create tables in the DB without any information, go to [Database.sql](https://github.com/rizosAlba/ToDo_Ensolvers/tree/main/Server/Database/database.sql) although this is not recommended because a username and password are needed to test the app. Because of this it's recommended to use the backup method_
 
 _If you prefer to restore the DB, you can do so using with [backups](https://github.com/rizosAlba/ToDo_Ensolvers/tree/main/Server/Database/backups) there is a **.sql** and a **.backup**_
 
